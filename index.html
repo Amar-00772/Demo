@@ -1,1 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel | Odisha State Open School Certificate Examination</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+            odisha: {
+              saffron: '#FF9933',
+              green: '#138808',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .sidebar-link.active {
+      background-color: #2563eb;
+      color: white;
+    }
+    .sidebar-link.active svg {
+      color: white;
+    }
+  </style>
+</head>
+<body class="bg-slate-100 min-h-screen font-sans antialiased">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-72 bg-slate-900 text-slate-200 flex flex-col shrink-0 shadow-xl">
+      <!-- Brand -->
+      <div class="px-5 py-6 border-b border-slate-700">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-odisha-saffron to-odisha-green flex items-center justify-center text-white font-bold text-sm shadow">
+            OS
+          </div>
+          <div>
+            <h1 class="text-sm font-semibold text-white leading-tight">Odisha State Open School</h1>
+            <p class="text-xs text-slate-400">Certificate Examination</p>
+          </div>
+        </div>
+      </div>
 
+      <!-- Nav -->
+      <nav class="flex-1 px-3 py-5 space-y-1 overflow-y-auto">
+        <p class="px-3 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Result Management</p>
+
+        <button
+          type="button"
+          data-panel="add-10th"
+          class="sidebar-link active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800 text-left"
+        >
+          <svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Add Class 10th Result
+        </button>
+
+        <button
+          type="button"
+          data-panel="remove-10th"
+          class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800 text-left"
+        >
+          <svg class="w-5 h-5 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+          Remove Class 10th Result
+        </button>
+
+        <button
+          type="button"
+          data-panel="add-12th"
+          class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800 text-left"
+        >
+          <svg class="w-5 h-5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Add Class 12th Result
+        </button>
+
+        <button
+          type="button"
+          data-panel="remove-12th"
+          class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800 text-left"
+        >
+          <svg class="w-5 h-5 text-orange-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+          Remove Class 12th Result
+        </button>
+      </nav>
+
+      <!-- Footer -->
+      <div class="px-5 py-4 border-t border-slate-700 text-xs text-slate-500">
+        Admin Panel · v1.0
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="flex-1 flex flex-col min-w-0">
+      <!-- Top bar -->
+      <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+        <div>
+          <h2 id="page-title" class="text-lg font-semibold text-slate-800">Add Class 10th Result</h2>
+          <p id="page-subtitle" class="text-sm text-slate-500">Enter student details and marks for Class 10th</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="hidden sm:inline text-sm text-slate-500">Administrator</span>
+          <div class="w-9 h-9 rounded-full bg-primary-600 text-white flex items-center justify-center text-sm font-semibold">
+            A
+          </div>
+        </div>
+      </header>
+
+      <!-- Forms area -->
+      <main class="flex-1 p-6 overflow-y-auto">
+        <!-- Add Class 10th -->
+        <section id="panel-add-10th" class="panel max-w-3xl">
+          <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 bg-slate-50">
+              <h3 class="font-semibold text-slate-800">Add Class 10th Result</h3>
+              <p class="text-sm text-slate-500 mt-0.5">Fill in the student information and subject marks</p>
+            </div>
+            <form class="p-6 space-y-5" onsubmit="handleSubmit(event, '10th', 'add')">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Roll Number <span class="text-red-500">*</span></label>
+                  <input type="text" name="roll" required placeholder="e.g. 102024001"
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Student Name <span class="text-red-500">*</span></label>
+                  <input type="text" name="name" required placeholder="Full name as per records"
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Father's Name</label>
+                  <input type="text" name="father" placeholder="Father's / Guardian's name"
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Date of Birth</label>
+                  <input type="date" name="dob"
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Exam Year <span class="text-red-500">*</span></label>
+                  <select name="year" required
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition text-sm bg-white">
+                    <option value="">Select year</option>
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Result Status</label>
+                  <select name="status"
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition text-sm bg-white">
+                    <option value="Pass">Pass</option>
+                    <option value="Fail">Fail</option>
+                    <option value="Compartment">Compartment</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="border-t border-slate-100 pt-5">
+                <h4 class="text-sm font-semibold text-slate-700 mb-3">Subject Marks (out of 100)</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">First Language (Odia / English)</label>
+                    <input type="number" name="lang1" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Second Language</label>
+                    <input type="number" name="lang2" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Mathematics</label>
+                    <input type="number" name="maths" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Science</label>
+                    <input type="number" name="science" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Social Science</label>
+                    <input type="number" name="social" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Optional Subject</label>
+                    <input type="number" name="optional" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none text-sm" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 pt-2">
+                <button type="submit"
+                  class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg shadow-sm transition focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+                  Save Result
+                </button>
+                <button type="reset"
+                  class="px-5 py-2.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-medium rounded-lg transition">
+                  Reset
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Remove Class 10th -->
+        <section id="panel-remove-10th" class="panel hidden max-w-3xl">
+          <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 bg-red-50">
+              <h3 class="font-semibold text-slate-800">Remove Class 10th Result</h3>
+              <p class="text-sm text-slate-500 mt-0.5">Search by roll number and confirm deletion</p>
+            </div>
+            <form class="p-6 space-y-5" onsubmit="handleSubmit(event, '10th', 'remove')">
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1.5">Roll Number <span class="text-red-500">*</span></label>
+                <input type="text" name="roll" required placeholder="Enter roll number to remove"
+                  class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition text-sm" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1.5">Exam Year</label>
+                <select name="year"
+                  class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition text-sm bg-white">
+                  <option value="">Any year</option>
+                  <option value="2026">2026</option>
+                  <option value="2025">2025</option>
+                  <option value="2024">2024</option>
+                  <option value="2023">2023</option>
+                </select>
+              </div>
+              <div class="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
+                <strong>Warning:</strong> This action permanently deletes the result record. It cannot be undone.
+              </div>
+              <div class="flex items-center gap-3">
+                <button type="submit"
+                  class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg shadow-sm transition focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                  Remove Result
+                </button>
+                <button type="reset"
+                  class="px-5 py-2.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-medium rounded-lg transition">
+                  Clear
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Add Class 12th -->
+        <section id="panel-add-12th" class="panel hidden max-w-3xl">
+          <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 bg-emerald-50">
+              <h3 class="font-semibold text-slate-800">Add Class 12th Result</h3>
+              <p class="text-sm text-slate-500 mt-0.5">Enter student details and subject marks for Class 12th</p>
+            </div>
+            <form class="p-6 space-y-5" onsubmit="handleSubmit(event, '12th', 'add')">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Roll Number <span class="text-red-500">*</span></label>
+                  <input type="text" name="roll" required placeholder="e.g. 122024001"
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Student Name <span class="text-red-500">*</span></label>
+                  <input type="text" name="name" required placeholder="Full name as per records"
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Father's Name</label>
+                  <input type="text" name="father" placeholder="Father's / Guardian's name"
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Stream / Group</label>
+                  <select name="stream"
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-sm bg-white">
+                    <option value="">Select stream</option>
+                    <option value="Arts">Arts</option>
+                    <option value="Science">Science</option>
+                    <option value="Commerce">Commerce</option>
+                    <option value="Vocational">Vocational</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Exam Year <span class="text-red-500">*</span></label>
+                  <select name="year" required
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-sm bg-white">
+                    <option value="">Select year</option>
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1.5">Result Status</label>
+                  <select name="status"
+                    class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-sm bg-white">
+                    <option value="Pass">Pass</option>
+                    <option value="Fail">Fail</option>
+                    <option value="Compartment">Compartment</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="border-t border-slate-100 pt-5">
+                <h4 class="text-sm font-semibold text-slate-700 mb-3">Subject Marks (out of 100)</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">English / MIL</label>
+                    <input type="number" name="english" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-sm" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Core Subject 1</label>
+                    <input type="number" name="core1" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-sm" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Core Subject 2</label>
+                    <input type="number" name="core2" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-sm" />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-slate-600 mb-1">Core Subject 3</label>
+                    <input type="number" name="core3" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-sm" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Elective Subject</label>
+                    <input type="number" name="elective" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-sm" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-slate-600 mb-1">Additional Subject (optional)</label>
+                    <input type="number" name="additional" min="0" max="100" placeholder="0–100"
+                      class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none text-sm" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 pt-2">
+                <button type="submit"
+                  class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg shadow-sm transition focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                  Save Result
+                </button>
+                <button type="reset"
+                  class="px-5 py-2.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-medium rounded-lg transition">
+                  Reset
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Remove Class 12th -->
+        <section id="panel-remove-12th" class="panel hidden max-w-3xl">
+          <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 bg-orange-50">
+              <h3 class="font-semibold text-slate-800">Remove Class 12th Result</h3>
+              <p class="text-sm text-slate-500 mt-0.5">Search by roll number and confirm deletion</p>
+            </div>
+            <form class="p-6 space-y-5" onsubmit="handleSubmit(event, '12th', 'remove')">
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1.5">Roll Number <span class="text-red-500">*</span></label>
+                <input type="text" name="roll" required placeholder="Enter roll number to remove"
+                  class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition text-sm" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1.5">Exam Year</label>
+                <select name="year"
+                  class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition text-sm bg-white">
+                  <option value="">Any year</option>
+                  <option value="2026">2026</option>
+                  <option value="2025">2025</option>
+                  <option value="2024">2024</option>
+                  <option value="2023">2023</option>
+                </select>
+              </div>
+              <div class="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
+                <strong>Warning:</strong> This action permanently deletes the result record. It cannot be undone.
+              </div>
+              <div class="flex items-center gap-3">
+                <button type="submit"
+                  class="px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg shadow-sm transition focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                  Remove Result
+                </button>
+                <button type="reset"
+                  class="px-5 py-2.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-medium rounded-lg transition">
+                  Clear
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Toast notification -->
+        <div id="toast" class="fixed bottom-6 right-6 hidden max-w-sm bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-lg text-sm font-medium z-50 transition-opacity duration-300">
+          <span id="toast-message"></span>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const titles = {
+      'add-10th': { title: 'Add Class 10th Result', subtitle: 'Enter student details and marks for Class 10th' },
+      'remove-10th': { title: 'Remove Class 10th Result', subtitle: 'Search and permanently remove a Class 10th result' },
+      'add-12th': { title: 'Add Class 12th Result', subtitle: 'Enter student details and marks for Class 12th' },
+      'remove-12th': { title: 'Remove Class 12th Result', subtitle: 'Search and permanently remove a Class 12th result' }
+    };
+
+    document.querySelectorAll('.sidebar-link').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const panel = btn.dataset.panel;
+
+        // Update active state
+        document.querySelectorAll('.sidebar-link').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Show correct panel
+        document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+        document.getElementById('panel-' + panel).classList.remove('hidden');
+
+        // Update header
+        document.getElementById('page-title').textContent = titles[panel].title;
+        document.getElementById('page-subtitle').textContent = titles[panel].subtitle;
+      });
+    });
+
+    function handleSubmit(e, level, action) {
+      e.preventDefault();
+      const form = e.target;
+      const roll = form.roll?.value?.trim() || '';
+      let message = '';
+
+      if (action === 'add') {
+        message = `Class ${level} result for roll ${roll} has been saved successfully.`;
+      } else {
+        message = `Class ${level} result for roll ${roll} has been removed.`;
+      }
+
+      showToast(message);
+      form.reset();
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.textContent = msg;
+      toast.classList.remove('hidden');
+      toast.style.opacity = '1';
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.classList.add('hidden'), 300);
+      }, 3200);
+    }
+  </script>
+</body>
+</html>
